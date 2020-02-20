@@ -3,7 +3,9 @@
     <ul class="collection with-header">
       <li class="collection-header"><h4>Survey Questions</h4></li>
       <!-- list survey questions for this survey -->
-      <li class="collection-item">Survey Question 1</li>
+      <%@questions.each do |survey_question|%>
+      <li class="collection-item"><%= link_to survey_question.question, edit_survey_question_path(survey_question) %></li>
+      <%end%>
     </ul>
 
     <div class="row">
