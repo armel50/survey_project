@@ -1,7 +1,46 @@
 <div class="row">
   <div class="col s12 m6">
     <h4>Edit Survey Question</h4>
-    
+     <%= form_for @question, url: "/surveys/#{@survey.id}/survey_questions/#{@question.id}", method: :patch do |f|%>
+
+  <%# the question and question_id make the @question variable availabe in our edit_single_question.js file %>
+
+            <% if @question.is_fixed %>
+                <button class="toggle_free_fixed">Expect free response?</button>
+                <%= @question.is_fixed%>
+              <br>
+              <div class="div_edit_question" question="<%=@question.question%>" question_id="<%=@question.id%>" options="<%= @question.question_options.map {|i| {"option_text": i.option_text,"id": i.id} }.to_json%>">
+
+                  <label class="labelForFixed">Question for fixed response</label>
+                    <textarea placeholder="Enter your question here" name="survey_question[questions1][question]" ><%=@question.question%></textarea>    
+                    <%@question.question_options.each do |option| %>
+                      <input name="survey_question[questions1][options][<%= option.id%>]" value="<%=option.option_text%>" >
+                    <% end %>
+                </div>
+
+                  <div class="optionContainer"></div>
+                    <div class ="buttonHolder"><button class="moreOptions">More options</button></div>
+
+
+              <%else%>    
+                              <%= @question.is_fixed%>
+           
+              <button class="toggle_free_fixed">Expect fixed response?</button>
+              <br>
+              <div class="div_edit_question" question="<%=@question.question%>" question_id="<%=@question.id%>"  >
+
+                  <label>Question for free response</label>
+                  <textarea name="survey_question[question]" placeholder="Enter your question here" ><%=@question.question %></textarea>
+              </div>
+            <%end%>
+            <div class="questionContainer"></div>
+                              <div class="optionContainer"></div>
+                    <div class ="buttonHolder"></div>
+
+            <br>
+            <br>
+            <%=f.submit%>
+          <% end %>
   </div>
 </div>
 
