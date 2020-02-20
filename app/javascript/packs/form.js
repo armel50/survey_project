@@ -76,7 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
         span_2X.addEventListener("click", () => {
           span_2X.parentNode.remove()
         })
-        const optionContainer = document.querySelector("div.optionContainer")
+
+          const optionContainer = document.querySelectorAll("div.optionContainer")[document.querySelectorAll("div.optionContainer").length - 1]
+
+        
         const new_input = document.createElement("input")
         new_input.placeholder = "Enter a possible answer"
         new_input.name="survey[questions1][][question][question_options][]"

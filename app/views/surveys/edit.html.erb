@@ -1,6 +1,31 @@
 <div class="row">
   <div class="col s12 m6">
     <h4>Edit Survey</h4>
-    
+      <%=form_for @survey do |f|%>
+        <%=f.text_field :name, placeholder: "Enter the name"%>
+
+        <%# clicking on the button will display the question options %>
+        <button class="add_question">Add a question</button>
+        <br>
+        <br>
+        <div class="questionContainer">
+        
+       <%@survey.survey_questions.each do |survey_question|%>
+        <% if survey_question.is_fixed %>
+         <label class="labelForFixed">Question for fixed response</label>
+          <textarea placeholder="Enter your question here" name="survey[questions1][][<%=survey_question.id%>]" ><%=survey_question.question %></textarea>    
+          <%survey_question.question_options.each do |option| %>
+            <input name="survey[options][][<%= option.id%>]" value="<%=option.option_text%>" >
+          <% end %>
+        <%else%>
+          <label>Question for free response</label>
+          <textarea name="survey[questions][][<%=survey_question.id%>]" placeholder="Enter your question here" ><%=survey_question.question %></textarea>
+        
+        <% end %>
+       <%end%>
+        <%=f.submit%>
+    <% end %>        
+    </div>
+
   </div>
 </div>
