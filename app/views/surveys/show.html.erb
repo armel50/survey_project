@@ -1,0 +1,27 @@
+<div>
+    <h1>This is what your survey will look like</h1>
+    <div class="surveyShow">
+     <h2> <%=@survey.name%> </h2>
+     <form class="surveyQuestion"> 
+        <% @survey.survey_questions.each do |question|%>
+
+            <% if question.is_fixed %> 
+                <h3><%= question.question %> </h3>
+                <br>
+                <br>
+                <select class="mySelect">
+                    <% question.question_options.each do |option| %>
+                        <option value=<%=option.option_text%> > <%= option.option_text%> </option> 
+                    <% end %>
+                    
+                </select>    
+            <% else %>
+
+                <h3><%= question.question %> </h3>
+                <textarea placeholder="Enter your answer here"></textarea>
+
+            <% end %>
+        <% end %>
+     </form>
+   </div>
+<div>
