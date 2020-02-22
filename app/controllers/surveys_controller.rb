@@ -20,7 +20,7 @@ class SurveysController < ApplicationController
         
         survey_params[:questions1].each do |question|
           # binding.pry
-          new_question = @survey.survey_questions.create({question: question[:question][:content],is_fixed: true})
+          new_question = @survey.survey_questions.create({question: question[:question][:content],order: question[:question][:order],is_fixed: true})
           new_option = question[:question][:question_options].each{|option| new_option = new_question.question_options.create({option_text: option})  }
         # binding.pry
         end
@@ -28,7 +28,9 @@ class SurveysController < ApplicationController
 
       if survey_params[:questions]
           survey_params[:questions].each do |question|
-            @survey.survey_questions.create({question: question})
+            # binding.pry
+
+            @survey.survey_questions.create({question: question[:question][:content], order: question[:question][:order]})
             # binding.pry
           end
       end

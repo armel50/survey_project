@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_054217) do
 
   create_table "survey_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "question"
+    t.string "order"
     t.boolean "is_fixed", default: false
     t.integer "survey_id"
     t.integer "question_option_id"

@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
          div_content.innerHTML= `
          <label>Question for free response</label>
-         <textarea name="survey[questions][]" placeholder="Enter your question here"></textarea>`
+        <div class="mySelect">Order: <select class="mySelect" name="survey[questions][][question][order]"></select</div> <textarea name="survey[questions][][question][content]" placeholder="Enter your question here"></textarea>`
+       select()
 
        })
        fixed_button.addEventListener("click", e => {
@@ -57,11 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // const num = document.querySelectorAll("label.labelForFixed").length + 1
         div_content.innerHTML = `
         <label class="labelForFixed">Question for fixed response</label>
-        <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
+        <div class="mySelect">Order: <select class="mySelect" name="survey[questions1][][question][order]"></select</div> <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
         <div class="optionContainer">
          <div class="optionInputDiv"> <input type="text" placeholder="Enter a possible answer" name="survey[questions1][][question][question_options][]" /> </div>
         </div>    
         `
+        select()
+
         //creation of the option button
         const option_button = document.createElement("button")
         option_button.innerText="More Option"
@@ -96,6 +99,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       })
+
+      //select feature 
+      function select(){
+        const selects = document.querySelectorAll("select.mySelect")
+        if(selects){
+          //declare a variable i to be used in the nested forEach
+           let i = 0
+           //declare a variable j to be able to tell which option should be selected on each select
+           let j = 0
+           
+
+          //This for each is to clear all the innerHTML of existing selects
+          selects.forEach(e => e.innerHTML = "")
+
+          // A nested forEach let us add option depending on 
+         selects.forEach(e => {
+           
+           selects.forEach(e=> {
+             console.log("this is the indexOf")
+             
+             const opt = document.createElement("option")
+             opt.value = i + 1
+             opt.innerHTML = i+1
+  
+             e.appendChild(opt)
+             
+           }) 
+
+           e.querySelectorAll("option").forEach(option =>{
+             // if j === i means that the index of the option is the same as the index of the select
+             // therefore that option should be selected by default
+              if(j === i){
+                option.selected = true
+              } 
+           })
+               i +=1
+               j +=1
+             
+
+
+         })
+            
+         
+        }
+      }
 
       // append the divs
      const container=  document.querySelector("div.questionContainer")

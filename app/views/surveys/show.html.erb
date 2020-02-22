@@ -8,10 +8,10 @@
     <div class="surveyShow">
      <h2> <%=@survey.name%> </h2>
      <form class="surveyQuestion"> 
-        <% @survey.survey_questions.each do |question|%>
+        <% @survey.survey_questions.order(:order).each do |question|%>
 
             <% if question.is_fixed %> 
-                <h3><%= question.question %> </h3>
+                <h3><span><%=question.order%>.</span><%= question.question %> </h3>
                 <br>
                 <br>
                 <select class="mySelect">
@@ -22,7 +22,7 @@
                 </select>    
             <% else %>
 
-                <h3><%= question.question %> </h3>
+                <h3><span><%=question.order%>.</span><%= question.question %> </h3>
                 <textarea placeholder="Enter your answer here"></textarea>
 
             <% end %>

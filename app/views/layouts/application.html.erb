@@ -9,7 +9,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <%# load the js file depending on the path and the available variables %>
-    <%=  (@survey && request.original_url ==root_url + "surveys/#{@survey.id}/new") ? ( javascript_pack_tag 'form.js', 'data-turbolinks-track': 'reload') : nil %>
+    <%=  (request.original_url ==root_url + "surveys/new") ? ( javascript_pack_tag 'form.js', 'data-turbolinks-track': 'reload') : nil %>
     <%=  (@survey && request.original_url ==root_url + "surveys/#{@survey.id}/survey_questions/new" )? (javascript_pack_tag 'question.js', 'data-turbolinks-track': 'reload') : nil %>
     <%=  (@survey && @question && request.original_url ==root_url + "surveys/#{@survey.id}/survey_questions/#{@question.id}/edit") ? ( javascript_pack_tag 'edit_single_question.js', 'data-turbolinks-track': 'reload'): nil %>
 
