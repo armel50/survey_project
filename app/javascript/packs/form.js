@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
          div_content.innerHTML= `
          <label>Question for free response</label>
-        <div class="mySelect">Order: <select class="mySelect" name="survey[questions][][question][order]"></select</div> <textarea name="survey[questions][][question][content]" placeholder="Enter your question here"></textarea>`
+        <div class="mySelect">Order: <select class="mySelect" name="survey[questions][][question][order]"></select></div> <textarea name="survey[questions][][question][content]" placeholder="Enter your question here"></textarea>`
        select()
 
        })
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // const num = document.querySelectorAll("label.labelForFixed").length + 1
         div_content.innerHTML = `
         <label class="labelForFixed">Question for fixed response</label>
-        <div class="mySelect">Order: <select class="mySelect" name="survey[questions1][][question][order]"></select</div> <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
+        <div class="mySelect">Order: <select class="mySelect" name="survey[questions1][][question][order]"></select></div> <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
         <div class="optionContainer">
          <div class="optionInputDiv"> <input type="text" placeholder="Enter a possible answer" name="survey[questions1][][question][question_options][]" /> </div>
         </div>    

@@ -62,7 +62,8 @@ class SurveysController < ApplicationController
       #el is an hash with only one key which is the id of a question
       el.keys.each do |key|
         survey_question = SurveyQuestion.find(key)
-        survey_question.question = el[key]
+        survey_question.question = el[key][:question]
+        survey_question.order = el[key][:order]
         survey_question.save
       end
     end
@@ -71,7 +72,8 @@ class SurveysController < ApplicationController
       #el is an hash with only one key which is the id of a question
       el.keys.each do |key|
         survey_question = SurveyQuestion.find(key)
-        survey_question.question = el[key]
+        survey_question.question = el[key][:question]
+        survey_question.order = el[key][:order]
         survey_question.save
       end
 

@@ -13,13 +13,29 @@
        <%@survey.survey_questions.each do |survey_question|%>
         <% if survey_question.is_fixed %>
          <label class="labelForFixed">Question for fixed response</label>
-          <textarea placeholder="Enter your question here" name="survey[questions1][][<%=survey_question.id%>]" ><%=survey_question.question %></textarea>    
+
+           <div class="mySelect">
+              Order: <select class="mySelect" name="survey[questions1][][<%=survey_question.id%>][order]"  >
+                      <%@survey.survey_questions.each_with_index do |question, index|%>
+                        <option value="<%=index + 1%>" <%=(index + 1).to_s == survey_question.order ? selected="selected" : nil %>  ><%=index + 1%></option>
+                      <% end%>
+                  </select>
+           </div>
+           <textarea placeholder="Enter your question here" name="survey[questions1][][<%=survey_question.id%>][question]" ><%=survey_question.question %></textarea>    
           <%survey_question.question_options.each do |option| %>
             <input name="survey[options][][<%= option.id%>]" value="<%=option.option_text%>" >
           <% end %>
         <%else%>
           <label>Question for free response</label>
-          <textarea name="survey[questions][][<%=survey_question.id%>]" placeholder="Enter your question here" ><%=survey_question.question %></textarea>
+
+           <div class="mySelect">
+              Order: <select class="mySelect" name="survey[questions][][<%=survey_question.id%>][order]" >
+                      <%@survey.survey_questions.each_with_index do |question, index|%>
+                        <option value="<%=index + 1%>"  <%=(index + 1).to_s == survey_question.order ? selected="selected" : nil %>  ><%=index + 1%></option>
+                      <% end%>
+                  </select>
+           </div>
+           <textarea name="survey[questions][][<%=survey_question.id%>][question]" placeholder="Enter your question here" ><%=survey_question.question %></textarea>
         
         <% end %>
        <%end%>
