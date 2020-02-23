@@ -21,9 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
             toggle_button.innerHTML = "Expect fixed response?"
             div_edit_question.innerHTML = `
               <label>Question for free response</label>
-              <textarea name="survey_question[question]" placeholder="Enter your question here" >${question}</textarea>
+              <textarea name="survey_question[questions][question]" placeholder="Enter your question here" >${question}</textarea>
             
             `
+              //change the name of the select tag
+              document.querySelector("select.mySelect").name="survey_question[questions][order]"
+
             //hide the add more button if the user is trying to create a question for a free response
             document.querySelector("button.moreOptions").style.display = "none"
 
@@ -42,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <textarea placeholder="Enter your question here" name="survey_question[questions1][question]" >${question}</textarea> 
                       
                     `
+                    //change the name of the select tag
+                    document.querySelector("select.mySelect").name="survey_question[questions1][order]"
             if(options && options.length > 0){
               
                     options.forEach(e =>{

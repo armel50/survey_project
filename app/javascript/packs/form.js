@@ -6,12 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const add_button = document.querySelector("button.add_question")
     if(add_button){
     add_button.addEventListener("click", (event) => {
+      event.preventDefault()
       const span_X = document.createElement("span")
       span_X.innerHTML = "X"
       span_X.addEventListener("click", () => {
         span_X.parentNode.remove()
       })
-      event.preventDefault()
+    
       //when the button is clicked, we will create a div with the two choices for the new question
       const div_question =  document.createElement("div") 
       div_question.classList.add("question")

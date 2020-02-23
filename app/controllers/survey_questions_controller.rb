@@ -8,24 +8,41 @@ class SurveyQuestionsController < ApplicationController
   def new
     @survey = Survey.find( params.permit("survey_id")[:survey_id])
     @question = SurveyQuestion.new
+    @questions = @survey.survey_questions
     
   end
 
   def create
+
+    flash[:errors] = []
     @survey = Survey.find( params.permit("survey_id")[:survey_id])
    if survey_question_params[:questions]
-     question = @survey.survey_questions.create({question: survey_question_params[:questions] })
+     question = @survey.survey_questions.build({question: survey_question_params[:questions][:question], order:  survey_question_params[:questions][:order] })
+
+     flash[:errors] << "Questions can't be blank" if question.question == ""
+     flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == question.order && el.id }
+     question.save if flash[:errors].empty?
    else
 
-    question = @survey.survey_questions.create({question: survey_question_params[:questions1][:question], is_fixed: true })
+    question = @survey.survey_questions.build({question: survey_question_params[:questions1][:question], is_fixed: true, order:  survey_question_params[:questions1][:order]})
+    flash[:errors] << "Questions can't be blank" if question.question == ""
+    flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == question.order && el.id }
+   
     survey_question_params[:questions1][:options].each do |option|
-     option = question.question_options.create({option_text: option})
+      # binding.pry
+
+     option = question.question_options.build({option_text: option})
+     flash[:errors] << "Options can't be blank" if option.option_text == ""
+     
     end
+    question.save if flash[:errors].empty?
    end
-   if !@survey.errors.any? 
+   if flash[:errors].empty?
+
     redirect_to @survey
    else
-    redirect_to :back
+    flash[:errors] = flash[:errors].uniq
+    redirect_to "/surveys/#{@survey.id}/survey_questions/new"
   end
   end
 
@@ -35,6 +52,8 @@ class SurveyQuestionsController < ApplicationController
   end
 
   def update
+
+    flash[:error] = []
     #find the survey and the question
     @survey = Survey.find(params.require(:survey_id))
     @question = SurveyQuestion.find(params.require("id"))
@@ -43,25 +62,29 @@ class SurveyQuestionsController < ApplicationController
 
       @question.is_fixed = true 
       @question.question = survey_question_params[:questions1][:question]
-      #remove existing option
-      if @question.question_options.length > 0 
-        @question.question_options.each {|option| option.delete}
-        
-      end
-      @question.save
+      @question.order = survey_question_params[:questions1][:order]
+
+      flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == question.order && el.id }
+      flash[:errors] << "Questions can't be blank" if @question.question == ""
+
+      @question.save if flash[:errors].empty?
 
       #iterate through the options
       survey_question_params[:questions1][:options].each do |key,val|
         # binding.pry
-        if key != "new"
-          option = QuestionOption.find(key)
-          option.option_text = survey_question_params[:questions1][:options][key]
-          # binding.pry
-          option.save 
-        else
-          survey_question_params[:questions1][:options][key].each do |option|
-            new_option = @question.question_options.create({option_text: option})
-          end
+            if key != "new"
+              option = QuestionOption.find(key)
+              option.option_text = survey_question_params[:questions1][:options][key]
+              # binding.pry
+              flash[:errors] << "Options can't be blank" if option.option_text == ""
+              option.save if flash[:errors].empty?
+            else
+              survey_question_params[:questions1][:options][key].each do |option|
+                new_option = @question.question_options.new({option_text: option})
+
+                flash[:errors] << "Options can't be blank" if new_option.option_text == ""
+              new_option.save if flash[:errors].empty?
+            end
           # binding.pry
         end
       
@@ -69,14 +92,22 @@ class SurveyQuestionsController < ApplicationController
       end
    else
      @question.is_fixed = false 
-      @question.question = survey_question_params[:question]
-      @question.save
+      @question.question = survey_question_params[:questions][:question]
+      @question.order = survey_question_params[:questions][:order]
+      flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == question.order && el.id }
+      flash[:errors] << "Questions can't be blank" if @question.question == ""
+      #remove existing option
+      if @question.question_options.length > 0 && flash[:errors].empty?
+        @question.question_options.each {|option| option.delete} 
+        @question.save
+      end
+      
    end
   #check if there is an error
-   if !@survey.errors.any? 
+   if flash[:errors].empty? 
     redirect_to @survey
-    
   else 
+    flash[:error] = flash[:error].uniq
     redirect_to :back
   end
     

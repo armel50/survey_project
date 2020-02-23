@@ -10,7 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const questionContainer = document.querySelector("div.questionContainer")
                 questionContainer.innerHTML = `
                 <label>Question for free response</label>
-                <textarea name="survey_question[questions]" placeholder="Enter your question here"></textarea>`
+                <textarea name="survey_question[questions][question]" placeholder="Enter your question here"></textarea>`
+
+                //change the name of the select tag
+                document.querySelector("select.mySelect").name="survey_question[questions][order]"
+
 
             }) 
 
@@ -26,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="optionInputDiv"> <input type="text" placeholder="Enter a possible answer" name="survey_question[questions1][options][]" /></div>
                 </div>  
                 <button class="moreOption">More option</button>  
-                `
+                ` 
+                //change the name of the select tag
+                document.querySelector("select.mySelect").name="survey_question[questions1][order]"
 
 
                 //let's select the button for more option
