@@ -32,11 +32,11 @@
 
     <%# display the errors%>
       <%if flash[:errors] && !flash[:errors].empty? %> 
-          <div class="error">
+          <div class="error center card red" >
               <h2> <%= pluralize(flash[:errors].count, "error") %> prohibited this action: </h2>
-              <ul>
-                  <% flash[:errors].each do |msg| %>
-                    <li><%= msg %></li>
+              <ul class="card-content">
+                  <% flash[:errors].each_with_index do |msg, index| %>
+                    <li><%=index + 1%>. <%= msg %></li>
                   <% end %>
               </ul>
           </div>  

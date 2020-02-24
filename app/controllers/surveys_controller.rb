@@ -89,8 +89,8 @@ class SurveysController < ApplicationController
 
     #check if the questions have the same order
     orders = []
-    survey_params[:questions1].each{|el| orders << el[el.keys[0]][:order]} if  survey_params[:questions1]
-    survey_params[:questions].each{|el| orders <<  el[ el.keys[0] ][:order]} if  survey_params[:questions]
+    survey_params[:questions1].each{|el| el.keys.each{|key| orders << el[key][:order]} } if  survey_params[:questions1]
+    survey_params[:questions].each{|el|  el.keys.each{|key| orders << el[key][:order]} } if  survey_params[:questions]
    
     flash[:errors] << "Questions can't have the same order" if orders.uniq.length != orders.length
 
@@ -149,7 +149,7 @@ class SurveysController < ApplicationController
     end
 
 
-    if !@survey.errors.any? && flash[:errors].empty?
+    if flash[:errors].empty?
       @survey.save
       redirect_to @survey
     else 

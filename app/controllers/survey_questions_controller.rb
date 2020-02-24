@@ -1,7 +1,7 @@
 class SurveyQuestionsController < ApplicationController
   def index
     @survey = Survey.find( params.permit("survey_id")[:survey_id])
-    @questions = SurveyQuestion.all.where("survey_id= ?", @survey.id)
+    @questions = SurveyQuestion.all.where("survey_id= ?", @survey.id).order(:order)
 
   end
 
