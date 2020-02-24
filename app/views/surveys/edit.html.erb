@@ -9,7 +9,7 @@
       
           <div class="questionContainer">
             <div class="row">
-                <%@survey.survey_questions.each do |survey_question|%>
+                <%@questions.each do |survey_question|%>
                       <% if survey_question.is_fixed %>
                     
                         <div class="mySelect col s3">

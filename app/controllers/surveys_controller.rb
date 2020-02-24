@@ -69,6 +69,7 @@ class SurveysController < ApplicationController
 
   def edit
     @survey = Survey.find(params[:id])
+    @questions = SurveyQuestion.all.where("survey_id= ?", @survey.id).order(:order)
   end
 
   def update
