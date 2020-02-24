@@ -67,12 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="mySelect col s2">Order: <select class="mySelect" name="survey[questions1][][question][order]"></select></div> 
                   <div class="col s10">              
                       <label class="labelForFixed">Question for fixed response</label>
-                      <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
+                      <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea> 
+                      <div class="optionContainer">
+                        <div class="optionInputDiv"> <input type="text" placeholder="Enter a possible answer" name="survey[questions1][][question][question_options][]" /> </div>
+                      </div>    
                   </div>
                     
-                  <div class="optionContainer col s12">
-                    <div class="optionInputDiv cols s10"> <input type="text" placeholder="Enter a possible answer" name="survey[questions1][][question][question_options][]" /> </div>
-                  </div> 
+                 
               </div>   
             `
             select()

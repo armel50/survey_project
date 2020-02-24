@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addMore(buttonMoreExist)
     }
     
-    //add event listerner 
+    //add event listerner to the button 
     toggle_button.addEventListener("click", e => {
         e.preventDefault()
         if(toggle_button.innerHTML.includes("free")){
