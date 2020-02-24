@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     add_button.addEventListener("click", (event) => {
       event.preventDefault()
       const span_X = document.createElement("span")
-      span_X.innerHTML = "X"
+      span_X.innerHTML =  `<i class="small material-icons">clear</i>`
+      span_X.classList.add("col","s1")
       span_X.addEventListener("click", () => {
         span_X.parentNode.remove()
       })
@@ -24,61 +25,76 @@ document.addEventListener('DOMContentLoaded', () => {
       //creation of button for fixed response
       const fixed_button = document.createElement("button")
       fixed_button.innerHTML = "Fixed Response"
+       fixed_button.classList.add("waves-effect","waves-light","btn","red","col","s5")
+      fixed_button.style.marginRight = "5px"
+      fixed_button.style.marginBottom = "20px"
+
+     
 
      
       //creation of button for free response
       const free_button = document.createElement("button")
       free_button.innerHTML = "Free Response"
+      free_button.classList.add("waves-effect","waves-light","btn","blue","col","s5" )
+      free_button.style.marginRight = "5px"
+      free_button.style.marginBottom = "20px"
+
+
       
 
        //addEvent to fixed and free button 
        free_button.addEventListener("click", e => {
          e.preventDefault()
 
-         if(free_button.classList.contains("active")){
-          fixed_button.classList.remove("active")
-          free_button.classList.add("active")
-
-         }
-
+      
          div_content.innerHTML= `
-         <label>Question for free response</label>
-        <div class="mySelect">Order: <select class="mySelect" name="survey[questions][][question][order]"></select></div> <textarea name="survey[questions][][question][content]" placeholder="Enter your question here"></textarea>`
+          <div class="row">
+            <div class="mySelect col s2">Order: <select class="mySelect" name="survey[questions][][question][order]"></select></div>
+            <div class="col s10"> 
+                <label>Question for free response</label>
+                <textarea  name="survey[questions][][question][content]" placeholder="Enter your question here"></textarea>
+            </div>
+           <div> 
+        `
        select()
 
        })
+
        fixed_button.addEventListener("click", e => {
-        e.preventDefault()
+            e.preventDefault()
+            div_content.innerHTML = `
+              <div class="row">              
+                  <div class="mySelect col s2">Order: <select class="mySelect" name="survey[questions1][][question][order]"></select></div> 
+                  <div class="col s10">              
+                      <label class="labelForFixed">Question for fixed response</label>
+                      <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
+                  </div>
+                    
+                  <div class="optionContainer col s12">
+                    <div class="optionInputDiv cols s10"> <input type="text" placeholder="Enter a possible answer" name="survey[questions1][][question][question_options][]" /> </div>
+                  </div> 
+              </div>   
+            `
+            select()
 
-        if(fixed_button.classList.contains("active")){
-          free_button.classList.remove("active")
-           fixed_button.classList.add("active")
-          
-        }
-        // here we define a num to be able to associate each option to its question
-        // const num = document.querySelectorAll("label.labelForFixed").length + 1
-        div_content.innerHTML = `
-        <label class="labelForFixed">Question for fixed response</label>
-        <div class="mySelect">Order: <select class="mySelect" name="survey[questions1][][question][order]"></select></div> <textarea placeholder="Enter your question here" name="survey[questions1][][question][content]"></textarea>    
-        <div class="optionContainer">
-         <div class="optionInputDiv"> <input type="text" placeholder="Enter a possible answer" name="survey[questions1][][question][question_options][]" /> </div>
-        </div>    
-        `
-        select()
+            //creation of the option button
+            const option_button = document.createElement("button")
+            option_button.innerText="More Option"
+            option_button.classList.add("addOption","waves-effect","waves-light","btn","blue","col","s2")
+            option_button.style.marginRight = "500px"
+            option_button.style.marginBottom = "20px"
 
-        //creation of the option button
-        const option_button = document.createElement("button")
-        option_button.innerText="More Option"
-        option_button.classList.add("addOption")
 
-        // addEvent to the option button
-        option_button.addEventListener("click", e => {
-          e.preventDefault()
-        //create new span for deletion
-        const span_2X = document.createElement("span")
-        span_2X.innerHTML = "X"
-        span_2X.addEventListener("click", () => {
-          span_2X.parentNode.remove()
+            // addEvent to the option button
+            option_button.addEventListener("click", e => {
+              e.preventDefault()
+            //create new span for deletion
+            const span_2X = document.createElement("span")
+            span_2X.innerHTML =   `<i class="tiny material-icons center">clear</i>`
+            span_2X.classList.add("col","s1")
+            span_2X.style.padding = "20px"
+            span_2X.addEventListener("click", () => {
+              span_2X.parentNode.remove()
         })
 
           const optionContainer = document.querySelectorAll("div.optionContainer")[document.querySelectorAll("div.optionContainer").length - 1]
@@ -87,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const new_input = document.createElement("input")
         new_input.placeholder = "Enter a possible answer"
         new_input.name="survey[questions1][][question][question_options][]"
+        new_input.classList.add("col", "s11")
 
         const input_div = document.createElement("div")
           input_div.classList.add("optionInputDiv")

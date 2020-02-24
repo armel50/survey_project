@@ -16,3 +16,14 @@
 select.mySelect{
     display: block;
 }
+
+div.questionContainer{
+    padding: 2em;
+}
+
+button.free{
+    margin: 20px
+}
+button.fixed{
+    margin: 20px
+}

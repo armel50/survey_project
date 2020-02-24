@@ -53,7 +53,7 @@ class SurveyQuestionsController < ApplicationController
 
   def update
 
-    flash[:error] = []
+    flash[:errors] = []
     #find the survey and the question
     @survey = Survey.find(params.require(:survey_id))
     @question = SurveyQuestion.find(params.require("id"))
@@ -64,7 +64,7 @@ class SurveyQuestionsController < ApplicationController
       @question.question = survey_question_params[:questions1][:question]
       @question.order = survey_question_params[:questions1][:order]
 
-      flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == question.order && el.id }
+      flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == @question.order && el.id != @question.id }
       flash[:errors] << "Questions can't be blank" if @question.question == ""
 
       @question.save if flash[:errors].empty?
@@ -107,8 +107,8 @@ class SurveyQuestionsController < ApplicationController
    if flash[:errors].empty? 
     redirect_to @survey
   else 
-    flash[:error] = flash[:error].uniq
-    redirect_to :back
+    flash[:errors] = flash[:errors].uniq
+    render :edit
   end
     
   end
