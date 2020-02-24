@@ -32,3 +32,8 @@ div.error{
     width: 80%;
     margin: 0 auto;
 }
+
+div.card{
+    margin: 0 auto;
+    width:60%;
+}
