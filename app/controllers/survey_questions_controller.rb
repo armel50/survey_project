@@ -35,7 +35,6 @@ class SurveyQuestionsController < ApplicationController
    end
 
     if @survey.save && flash[:errors].empty?
-      binding.pry
         redirect_to @survey
     else
       flash[:errors] = flash[:errors].uniq
@@ -83,7 +82,7 @@ class SurveyQuestionsController < ApplicationController
      @question.is_fixed = false 
       @question.question = survey_question_params[:questions][:question]
       @question.order = survey_question_params[:questions][:order]
-      flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == question.order && el.id }
+      flash[:errors] << "This order is already assigned to a question" if @survey.survey_questions.find{|el| el.order == @question.order && el.id != @question.id}
       flash[:errors] << "Questions can't be blank" if @question.question == ""
 
       #remove existing options if the user decide to change the type of the question to a free type

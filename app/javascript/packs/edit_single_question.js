@@ -28,17 +28,27 @@ document.addEventListener('DOMContentLoaded', () => {
               document.querySelector("select.mySelect").name="survey_question[questions][order]"
 
             //hide the add more button if the user is trying to create a question for a free response
-            document.querySelector("button.moreOptions").style.display = "none"
+            if(document.querySelector("button.moreOptions")){
+                 document.querySelector("button.moreOptions").style.display = "none"
+            }
 
            if( document.querySelector("div.optionContainer") ){
             document.querySelector("div.optionContainer").innerHTML = ""
            }
 
         }else{
-            if(document.querySelector("button.moreOptions")){
-                document.querySelector("button.moreOptions").style.display = "block"
+            // if(document.querySelector("button.moreOptions")){
+            //     document.querySelector("button.moreOptions").style.display = "block"
+            //     document.querySelector("button.moreOptions").classList.add("waves-effect","waves-light","btn","blue","col","s2","right")
 
-            }
+            // }else{
+                const newBtn = document.createElement("button")
+                newBtn.innerHTML = "More options"
+                newBtn.classList.add("moreOptions","waves-effect","waves-light","btn","blue","right")
+                document.querySelector("div.buttonHolder").appendChild(newBtn)
+                addMore(newBtn)
+                
+            //}
             toggle_button.innerHTML = "Expect free response?"
             div_edit_question.innerHTML = `
                     <label class="labelForFixed">Question for fixed response</label>
@@ -51,12 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
               
                     options.forEach(e =>{
                         div_edit_question.innerHTML += `
-                                <input name='survey_question[questions1][options][${e.id}]' value=${e.option_text} >
+                                <input  name='survey_question[questions1][options][${e.id}]' value=${e.option_text} >
                         `
                     })
             }else{
                 div_edit_question.innerHTML += `
-                    <input name='survey_question[questions1][options][new][]' placeholder="Enter a possible answer" >
+                    <input  name='survey_question[questions1][options][new][]' placeholder="Enter a possible answer" >
                 `
                 
             }
@@ -85,15 +95,19 @@ document.addEventListener('DOMContentLoaded', () => {
           //create a new div to host the new input
           const newDiv = document.createElement("div")
           newDiv.classList.add("newDiv")
+          newDiv.classList.add("row")
     
           //create new input for options
           new_input = document.createElement("input")
           new_input.name='survey_question[questions1][options][new][]' 
           new_input.placeholder = "Enter a possible answer" 
+          new_input.classList.add("col","s11")
     
           //create a span for deletion of added fields
           const span_2X = document.createElement("span")
-          span_2X.innerHTML = "X"
+          span_2X.innerHTML =  `<i class="tiny material-icons center">clear</i>`
+          span_2X.classList.add("col","s1")
+          span_2X.style.padding = "20px"
           span_2X.addEventListener("click", () => {
             span_2X.parentNode.remove()
           })
